@@ -1,0 +1,2 @@
+Am unable to do checkbox task properly, hence there are 2 versions of code in this. 
+If the checkbox is still not working properly to return a result, I have done up the other tasks by writing methods to add all the articles to redis and making the retrieval by ID possible. The methods to be uncommented have been noted in the controller and service files.
