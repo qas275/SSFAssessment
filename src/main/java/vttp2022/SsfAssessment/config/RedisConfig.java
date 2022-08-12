@@ -1,10 +1,7 @@
 package vttp2022.SsfAssessment.config;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -15,7 +12,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import vttp2022.SsfAssessment.model.AllNews;
 import vttp2022.SsfAssessment.model.Article;
 
 @Configuration
@@ -28,7 +24,7 @@ public class RedisConfig {
     private Integer redisPort = 17491;
 
     // @Value("${spring.redis.password}")
-    private String redisPassword = "weishunlim";
+    private String redisPassword = System.getenv("redisPassword");
 
     // @Value("{spring.redis.database}")
     private String redisDb ="0";

@@ -1,6 +1,5 @@
 package vttp2022.SsfAssessment.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ public class NewsController {
     public String startPage(Model model){
         AllNews Articles = new AllNews();
         Articles.setallarticles(service.getArticles().get());
-        everything = Articles.allarticles;//TODO REMOVE!!!
+        everything = Articles.allarticles;//added this to add all articles to a list to test future function
         logger.info("TESTING >>>"+ Articles.getallarticles().get(0).getId());
         model.addAttribute("Articles", Articles);
         return "allNews";
@@ -38,12 +37,19 @@ public class NewsController {
     @PostMapping(path = "/articles")
     public String savePage(@ModelAttribute("Articles") AllNews Articles,Model model){
         AllNews tosave = Articles;
-        AllNews everythingA = new AllNews();//TODO REMOVE
-        everythingA.allarticles = everything;//TODO REMOVE
-        //service.saveArticles(tosave);
-        service.saveArticles(everythingA);//TODO REMOVE this saves all articles
+        service.saveArticles(tosave);
         Articles.setallarticles(service.getArticles().get());
         model.addAttribute("Articles", Articles);
         return "allNews";
     }
+
+    // @PostMapping(path = "/articles") //Uncomment this method to replace above if unable to get checkbox return from model
+    // public String savePage(@ModelAttribute("Articles") AllNews Articles,Model model){
+    //     AllNews everythingA = new AllNews();
+    //     everythingA.allarticles = everything;
+    //     service.saveArticles(everythingA);//TOD
+    //     Articles.setallarticles(service.getArticles().get());
+    //     model.addAttribute("Articles", Articles);
+    //     return "allNews";
+    // }
 }

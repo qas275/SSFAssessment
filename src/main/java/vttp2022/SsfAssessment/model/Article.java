@@ -4,23 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
-import jakarta.json.JsonValue;
 
 public class Article {
     private String id;
@@ -88,8 +79,6 @@ public class Article {
         this.categories = categories;
     }
 
-    @Value("crypto.apikey")
-    String apikey;
 
     private static final Logger logger = LoggerFactory.getLogger(Article.class);
     public String APIUrl = "https://min-api.cryptocompare.com/data/v2/news/?lang=EN";
@@ -122,7 +111,7 @@ public class Article {
         article.body = singleArticleObjectJson.getString("body");
         article.tags = singleArticleObjectJson.getString("tags");
         article.categories = singleArticleObjectJson.getString("categories");
-        logger.info("ONE ARTICLE INFO >>>> " + article.id + " " + article.imageurl+ " " + article.body + " " + article.published + " " + article.title + " " + article.url + " " + article.tags + " " + article.categories);
+        //logger.info("ONE ARTICLE INFO >>>> " + article.id + " " + article.imageurl+ " " + article.body + " " + article.published + " " + article.title + " " + article.url + " " + article.tags + " " + article.categories);
         return article;
     }
 }

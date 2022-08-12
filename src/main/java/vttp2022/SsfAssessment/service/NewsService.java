@@ -1,7 +1,6 @@
 package vttp2022.SsfAssessment.service;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +21,7 @@ import vttp2022.SsfAssessment.model.Article;
 @Service
 public class NewsService {
     
-    @Value("crypto.apikey")
-    String apikey;
+    String apikey = System.getenv("cryptoAPIKey");
 
     @Autowired
     @Qualifier("news")
@@ -34,24 +31,21 @@ public class NewsService {
     public String APIUrl = "https://min-api.cryptocompare.com/data/v2/news/?lang=EN";
     
     public Optional<List<Article>> getArticles(){
-        String APIKEY = "1b09baf3bed283c3a20f5cfe591c85af0252ed3ad1935d2fec6648be372408e4";
-        List ArticlesList = new LinkedList<>();
         String ArticlesUrl = UriComponentsBuilder.fromUriString(APIUrl)
-                                .queryParam("api_key", APIKEY)
-                                .toUriString(); //TODO see if can use apikey, api was down just now
+                                .queryParam("api_key", apikey)
+                                .toUriString();
 
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> resp = null;
         try {
             logger.info("Start to talk to api");
             logger.info(ArticlesUrl);
-            resp = template.exchange(APIUrl, HttpMethod.GET, null, String.class, 1);
+            resp = template.exchange(ArticlesUrl, HttpMethod.GET, null, String.class, 1);
             logger.info("BODY GOT");
-            logger.info(resp.getBody());
             List<Article> response = Article.createJsonList(resp.getBody());
             return Optional.of(response);
         } catch (Exception e) {
-            //TODO: handle exception
+
             e.printStackTrace();
         }
         return Optional.empty();
@@ -60,12 +54,20 @@ public class NewsService {
     public void saveArticles(AllNews Articles){
         List<Article> toSave = new ArrayList<>();
         for(Article singleArticle:Articles.getallarticles()){
-            //if(singleArticle.isSave()){
+            if(singleArticle.isSave()){
                 toSave.add(singleArticle);
                 redisTemplate.opsForValue().set(singleArticle.getId(), singleArticle);
-            //}
+            }
         }
     }
+
+    // public void saveArticles(AllNews Articles){ //Uncomment to save all articles to redis
+    //     List<Article> toSave = new ArrayList<>();
+    //     for(Article singleArticle:Articles.getallarticles()){
+    //             toSave.add(singleArticle);
+    //             redisTemplate.opsForValue().set(singleArticle.getId(), singleArticle);
+    //     }
+    // }
 
     public Article getbyID(String articleID){
         Article reqArticle = new Article();
