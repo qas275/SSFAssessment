@@ -3,16 +3,16 @@ name: Deploy
 on:
   push:
     branches:
-      -main
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps: 
-      -uses: actions/checkout@v2
-      -uses: akhileshns/heroku-deploy@v3.12.12 ## this is the action
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "gentle-gorge-95008" ## must be all lower
-        heroku_email: "limw0187@e.ntu.edu.sg" ##heroku registered email, go to git hub, so to account, secrets, actions, new secrets actions, copy the above HEROKU API KEY to the field there and heroku api key to the body
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 ## this is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "gentle-gorge-95008" ## must be all lower
+          heroku_email: "limw0187@e.ntu.edu.sg" ##heroku registered email, go to git hub, so to account, secrets, actions, new secrets actions, copy the above HEROKU API KEY to the field there and heroku api key to the body
         
