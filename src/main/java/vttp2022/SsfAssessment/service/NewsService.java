@@ -21,7 +21,7 @@ import vttp2022.SsfAssessment.model.Article;
 @Service
 public class NewsService {
     
-    String apikey = System.getenv("cryptoAPIKey");
+    String apikey = System.getenv("cryptoAPIKey");//test
 
     @Autowired
     @Qualifier("news")
