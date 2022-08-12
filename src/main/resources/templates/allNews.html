@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        Crypto News of the Day
+    </h1>
+    <div>
+        <form th:object = "${Articles}" action = "#" th:action = "@{/articles}" method = "post">
+            <input type = "submit" value="SAVE"/>
+            <ul th:each="article:*{allarticles}">
+                <li>
+                    <span th:object="${article}">
+                        <img th:src ="*{imageurl}"> <br>
+                        <span>ID:<span th:text="*{id}"></span></span><br>
+                        <span>title:<span th:text="*{title}"></span></span><br>
+                        <span>body:<span th:text="*{body}"></span></span><br>
+                        <span>published:<span th:text="*{published}"></span></span><br>
+                        <a th:href=*{url}>Link</a>
+                        <input type="checkbox" name="save" th:checked="${article.save}" />
+                    </span>
+                </li>
+            </ul>
+        </form>
+    </div>
+</body>
+</html>
